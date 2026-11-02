@@ -38,6 +38,11 @@
     "plugins": [
       "expo-status-bar",
       "expo-web-browser"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c8630c79-c964-4e5c-895d-845f767b1ce8"
+      }
+    }
   }
 }
