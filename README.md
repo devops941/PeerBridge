@@ -4,6 +4,7 @@
 > Built with **React Native (Expo)**, **Node.js + Express (TypeScript)**, and **MongoDB Atlas**.
 
 ---
+https://expo.dev/accounts/kaizeninfinities/projects/peerbridge/builds/023a4cce-b244-4148-b144-c79d1658f9ca
 
 ## 📱 Mobile Visual Aesthetic & Screens (Inspired by TeachNest UI)
 The app implements the modern **Emerald Green (`#00C48C` / `#10B981`)** design language:
