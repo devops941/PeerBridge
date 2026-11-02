@@ -19,6 +19,7 @@
     "android": {
       "package": "com.peerbridge.app",
       "softwareKeyboardLayoutMode": "resize",
+      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/favicon.png"
