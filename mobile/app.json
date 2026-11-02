@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "PeerBridge",
+    "slug": "peerbridge",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/favicon.png",
+    "userInterfaceStyle": "light",
+    "primaryColor": "#00C48C",
+    "splash": {
+      "image": "./assets/app_icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#FFFFFF"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.peerbridge.app"
+    },
+    "android": {
+      "package": "com.peerbridge.app",
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/favicon.png"
+      },
+      "permissions": [
+        "INTERNET",
+        "RECORD_AUDIO",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-status-bar",
+      "expo-web-browser"
+    ]
+  }
+}
