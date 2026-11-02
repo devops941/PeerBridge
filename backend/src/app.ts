@@ -1,5 +1,6 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import { connectDB } from './config/db';
 import authRoutes from './modules/auth/auth.routes';
 import tutorsRoutes from './modules/tutors/tutors.routes';
 import sessionsRoutes from './modules/sessions/sessions.routes';
@@ -22,15 +23,55 @@ app.use(cors());
 app.use(express.json({ limit: '40mb' }));
 app.use(express.urlencoded({ extended: true, limit: '40mb' }));
 
-// Health Check
+// Ensure DB connection for serverless (Vercel) & traditional servers
+app.use(async (_req: Request, _res: Response, next: NextFunction) => {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error('[DB Middleware] Connection error:', err);
+  }
+  next();
+});
+
+// Status helper
+const getApiStatus = () => ({
+  success: true,
+  status: 'online',
+  app: 'PeerBridge Backend API',
+  tagline: 'Learn • Share • Grow • Together',
+  version: '1.0.0',
+  message: '🚀 PeerBridge Backend API is live and healthy!',
+  endpoints: {
+    health: '/api/v1/health',
+    auth: '/api/v1/auth',
+    doubts: '/api/v1/doubts',
+    subjects: '/api/v1/subjects',
+    tutors: '/api/v1/tutors',
+    stories: '/api/v1/stories',
+    chat: '/api/v1/chat'
+  },
+  timestamp: new Date().toISOString()
+});
+
+// Root & Health Check Endpoints
+app.get('/', (_req: Request, res: Response) => {
+  res.json(getApiStatus());
+});
+
+app.get('/health', (_req: Request, res: Response) => {
+  res.json({ status: 'ok', success: true, timestamp: new Date().toISOString() });
+});
+
+app.get('/api', (_req: Request, res: Response) => {
+  res.json(getApiStatus());
+});
+
+app.get('/api/v1', (_req: Request, res: Response) => {
+  res.json(getApiStatus());
+});
+
 app.get('/api/v1/health', (_req: Request, res: Response) => {
-  res.json({
-    status: 'ok',
-    app: 'PeerBridge Backend API',
-    tagline: 'Learn • Share • Grow • Together',
-    version: '1.0.0',
-    timestamp: new Date().toISOString()
-  });
+  res.json(getApiStatus());
 });
 
 // API Routes
@@ -50,8 +91,11 @@ app.use('/api/v1/notifications', notificationsRoutes);
 app.use('/api/v1/stories', storiesRoutes);
 
 // Global 404 handler
-app.use((_req: Request, res: Response) => {
-  res.status(404).json({ success: false, message: 'API Route not found' });
+app.use((req: Request, res: Response) => {
+  res.status(404).json({
+    success: false,
+    message: `API Route not found: ${req.method} ${req.originalUrl}`
+  });
 });
 
 export default app;
