@@ -1,7 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Local LAN IP connects physical Android phone (Expo Go), emulator & web directly to backend
-export const API_URL = 'http://192.168.1.17:5000/api/v1';
+// Production live Vercel backend URL (accessible anywhere on 4G/Wi-Fi):
+export const API_URL = 'https://peer-bridge-omega.vercel.app/api/v1';
+
+// Local LAN IP fallback (use when testing backend locally on your machine):
+// export const API_URL = 'http://192.168.1.17:5000/api/v1';
 
 async function request(endpoint: string, options: RequestInit = {}, token?: string | null) {
   const headers: Record<string, string> = {
